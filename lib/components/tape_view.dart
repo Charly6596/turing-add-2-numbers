@@ -21,7 +21,6 @@ class TapeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("$head");
     return Stack(
       clipBehavior: Clip.none,
       children: [
