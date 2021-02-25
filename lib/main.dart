@@ -1,113 +1,273 @@
+import 'package:add_machine/add_machine.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'components/config_info.dart';
+import 'components/github_button.dart';
+import 'components/machine_table.dart';
+import 'components/num_input.dart';
+import 'components/tap_bar.dart';
+import 'components/txt.dart';
+import 'machine_cubit.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (c) => SumCubit(machine: AddMachine()),
+      child: MaterialApp(
+        title: 'Turing machine sum',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          textButtonTheme: TextButtonThemeData(style: ButtonStyle()),
+          primarySwatch: Colors.deepOrange,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(Size(50, 50)),
+          )),
+          accentColor: Colors.green,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(),
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              fontSize: 42,
+              color: Colors.black,
+            ),
+            bodyText2: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+        ),
+        home: HomePage(),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class HomePage extends StatelessWidget {
+  HomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+      extendBody: true,
+      // appBar: _header(context),
+      body: Stack(
+        children: [
+          _mainContent(),
+          _footer(context),
+          _topBar(),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+    );
+  }
+
+  Align _footer(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        color: Theme.of(context).primaryColor,
+        alignment: Alignment.center,
+        height: 50,
+        child: GithubButton(),
+      ),
+    );
+  }
+
+  Align _topBar() {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: TapeBar(),
+    );
+  }
+
+  Widget _mainContent() {
+    return SingleChildScrollView(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          var wideScreen = constraints.maxWidth > 1200;
+          return Container(
+            alignment: Alignment.topCenter,
+            padding: wideScreen
+                ? EdgeInsets.symmetric(horizontal: 70, vertical: 40)
+                : EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 800),
+              child: Column(
+                children: [
+                  const SizedBox(height: 80),
+                  H1("Turing machine sum"),
+                  const SizedBox(height: 10),
+                  RichText(
+                    text: TextSpan(
+                      text:
+                          "This is a turing machine simulator that computes the sum of two natural numbers. " +
+                              "We can represent each natural number ",
+                      style: DefaultTextStyle.of(context).style,
+                      children: [
+                        TextSpan(
+                          text: "n",
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                        TextSpan(text: ' with a string of length '),
+                        TextSpan(
+                          text: "n+1 ",
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                        TextSpan(
+                          text:
+                              "formed by ocurrences of the symbol | (the vertical bar), so we would have that ",
+                        ),
+                        TextSpan(
+                          text: "0 = |, 1 = ||, ",
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                        TextSpan(text: " and so on.\n\n"),
+                        TextSpan(
+                            text:
+                                " If we put the TM defined by the table below "),
+                        TextSpan(
+                          text: "after several strings ",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                            text:
+                                " we can compute the sum of the numbers.\n\n"),
+                        TextSpan(
+                            text:
+                                "Let's try it, enter two numbers in the following fields and press the "),
+                        TextSpan(
+                          text: "play button: \n",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  _renderInput(context),
+                  RichText(
+                    text: TextSpan(
+                      text: "\nNotice that the ",
+                      style: DefaultTextStyle.of(context).style,
+                      children: [
+                        TextSpan(
+                          text: "tape ",
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                        TextSpan(
+                            text: "at the top has been filled with symbols! "),
+                        TextSpan(text: "You can now watch the execution "),
+                        TextSpan(
+                          text: "step by step ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                            text:
+                                "using the buttons at the top, or you can alternatively "),
+                        TextSpan(
+                          text: "scroll the tape horizontally ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(text: "to explare its content.\n\n"),
+                        TextSpan(
+                          text:
+                              "You can also watch the state of the different ",
+                        ),
+                        TextSpan(
+                          text: "configurations ",
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                        TextSpan(
+                            text:
+                                " by looking at the table at the bottom. Have fun! \n\n"),
+                      ],
+                    ),
+                  ),
+                  _renderMachineConfig(),
+                  const SizedBox(height: 50),
+                  H1("Table"),
+                  _renderMachineTable(),
+                  const SizedBox(height: 100),
+                ],
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _renderInput(BuildContext context) {
+    var cubit = context.watch<SumCubit>();
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Txt("Input", size: 28),
+        // const SizedBox(width: 10),
+        NumInput(
+          width: 40,
+          hint: "a",
+          value: cubit.a,
+          onChanged: (i) => cubit.onAChanged(i),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        const SizedBox(width: 10),
+        Material(
+          child: Txt(
+            "+",
+            size: 28,
+          ),
+        ),
+        const SizedBox(width: 10),
+        NumInput(
+          width: 40,
+          hint: "b",
+          value: cubit.b,
+          onChanged: (i) => context.read<SumCubit>().onBChanged(i),
+        ),
+        const SizedBox(width: 20),
+        _playButton(context),
+      ],
+    );
+  }
+
+  Widget _playButton(BuildContext context) {
+    return ElevatedButton(
+      child: Icon(Icons.play_arrow),
+      onPressed: () {
+        context.read<SumCubit>().startNew();
+        FocusScope.of(context).unfocus();
+      },
+    );
+  }
+
+  Widget _renderMachineTable() {
+    return BlocBuilder<SumCubit, SumState>(
+      builder: (context, state) {
+        var table = context.read<SumCubit>().table;
+        if (state is SumRunning) {
+          return MachineTable(state.configuration, table);
+        }
+        return MachineTable(Configuration.empty, table);
+      },
+    );
+  }
+
+  Widget _renderMachineConfig() {
+    return BlocBuilder<SumCubit, SumState>(
+      builder: (context, state) {
+        if (state is SumRunning) {
+          return ConfigInfo(configuration: state.configuration);
+        }
+
+        return ConfigInfo(configuration: Configuration.empty);
+      },
     );
   }
 }
