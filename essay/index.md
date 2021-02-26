@@ -3,10 +3,8 @@
 % February 26, 2021
 \newpage
 # Introduction
-This will be based on an interactive webpage that simulates a Turing machine that computes the sum of two numbers.
-The webpage can be found [here](https://charly6596.github.io/turing_add/).
-
-I will introduce the necessary concepts to understand the implementation.
+This project is an interactive webpage that simulates a Turing machine to compute the sum of two integers.
+The webpage can be found [here](https://charly6596.github.io/turing_add/). I will start by introducing you to some of the Turing machine concepts.
 
 # Introduction to Turing machines
 A Turing machine (TM from now on) is an _ideal machine_ that **seems capable** of computing every function that
