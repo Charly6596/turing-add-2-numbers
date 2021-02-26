@@ -1,4 +1,4 @@
-import 'package:add_machine/add_machine.dart';
+import 'package:turing_machine/turing_machine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,10 +1,9 @@
-import 'package:add_machine/add_machine.dart';
-import 'package:add_machine/src/add_machine.dart';
+import 'package:add_machine/turing_machine.dart';
 import 'package:test/test.dart';
 
 void main() {
   test("Add machine should run without errors", () {
-    var m = AddMachine();
+    var m = SumMachine();
     m.initialize(1, 1);
 
     var config = m.initialConfiguration;
@@ -18,7 +17,7 @@ void main() {
   });
 
   test("Add machine should run without errors", () {
-    var m = AddMachine();
+    var m = SumMachine();
     m.initialize(5, 3);
 
     List<Configuration> configs = [];

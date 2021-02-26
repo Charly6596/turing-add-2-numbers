@@ -1,5 +1,5 @@
-name: add_machine
-description: A Turing Machine to sum two integers
+name: turing_machine
+description: A Turing Machine library
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

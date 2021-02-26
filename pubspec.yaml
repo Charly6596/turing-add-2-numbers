@@ -27,8 +27,8 @@ dependencies:
   responsive_builder: ^0.3.0
   flutter:
     sdk: flutter
-  add_machine:
-    path: packages/add_machine
+  turing_machine:
+    path: packages/turing_machine
   infinite_tape:
     path: packages/infinite_tape
 

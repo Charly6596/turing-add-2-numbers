@@ -1,13 +1,12 @@
-import 'package:add_machine/src/table_entry.dart';
-
-import 'package:add_machine/src/state_symbol.dart';
 import 'package:infinite_tape/infinite_tape.dart';
 
 import 'configuration.dart';
 import 'instruction.dart';
 import 'machine.dart';
+import 'state_symbol.dart';
+import 'table_entry.dart';
 
-class AddMachine extends Machine {
+class SumMachine extends Machine {
   static const String blank = " ";
   static const String symbol = "|";
 
@@ -40,7 +39,7 @@ class AddMachine extends Machine {
 
   Configuration initialConfiguration;
 
-  AddMachine() {
+  SumMachine() {
     checkTable();
   }
 
@@ -67,10 +66,7 @@ class AddMachine extends Machine {
   }
 
   Configuration next() {
-    if (initialConfiguration == null) {
-      throw StateError(
-          "AddMachine not initialized. Did you call [initialize(int, int)]?");
-    }
+    _ensureInitialized();
 
     if (_index + 1 < _history.length) {
       return _history[++_index];

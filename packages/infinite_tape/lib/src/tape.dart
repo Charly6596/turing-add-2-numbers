@@ -106,6 +106,9 @@ class Tape {
 
   @override
   String toString() {
-    return toList().toString();
+    var left = _left.toList().toString();
+    var middle = _right.first;
+    var right = _right.skip(1).toList().toString();
+    return "[$left $middle $right]";
   }
 }

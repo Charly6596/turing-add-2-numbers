@@ -104,7 +104,7 @@ abstract class Machine {
     } else if (instruction is MoveLeft) {
       index--;
       tape.moveLeft();
-    } else {
+    } else if (instruction is MoveRight) {
       index++;
       tape.moveRight();
     }

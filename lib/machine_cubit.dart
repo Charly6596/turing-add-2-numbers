@@ -1,11 +1,11 @@
-import 'package:add_machine/add_machine.dart';
+import 'package:turing_machine/turing_machine.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 class SumCubit extends Cubit<SumState> {
-  final AddMachine _machine;
-  SumCubit({@required AddMachine machine})
+  final SumMachine _machine;
+  SumCubit({@required SumMachine machine})
       : _machine = machine,
         super(SumInitial());
 
