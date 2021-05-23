@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    Fore more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+  -->
+  <base href="/turing-add-2-numbers/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A turing machine simulation that computes the sum of two natural numbers.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Add turing machine">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <link rel="stylesheet" href="loader.css" type="text/css" media="all">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Turing sum of 2 numbers</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div id="loader">
+    <h1 id="loader-title">Loading</h1>
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  </div>
+
+  <script>
+
+  </script>
+  <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('flutter-first-frame', function () {
+        // remove loader
+        const illo = document.getElementById('loader');
+        illo.remove();
+        navigator.serviceWorker.register('flutter_service_worker.js?v=1858695519');
+      });
+    }
+  </script>
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>
