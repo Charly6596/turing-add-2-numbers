@@ -31,8 +31,8 @@ class GithubButton extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        js.context
-            .callMethod('open', ['https://github.com/Charly6596/turing_add']);
+        js.context.callMethod(
+            'open', ['https://github.com/Charly6596/turing-add-2-numbers']);
       },
       label: Text("Github"),
       icon: Icon(GithubIcons.mark_github),
