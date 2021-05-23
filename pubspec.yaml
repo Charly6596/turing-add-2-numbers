@@ -1,4 +1,4 @@
-name: turing_add
+name: turing-add-2-numbers
 description: A Turing Machine simulation that performs the sum of two integers.
 
 # The following line prevents the package from being accidentally published to

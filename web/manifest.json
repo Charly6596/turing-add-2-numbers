@@ -1,6 +1,6 @@
 {
-  "name": "turing_add",
-  "short_name": "turing_add",
+  "name": "turing-add-2-numbers",
+  "short_name": "turing-add",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
